@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MEMAnalyzer_Backend.Business.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace MEMAnalyzer_Backend.Controllers
 {
+    [Authorize(Roles = Roles.ADMINISTRATOR)]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -23,6 +26,9 @@ namespace MEMAnalyzer_Backend.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Deletes a specific TodoItem.
+        /// </summary>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
