@@ -12,5 +12,13 @@ namespace MEMAnalyzer_Backend.DBModels
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Mem> Memes { get; set; }
+
+        public DbSet<Result> Results { get; set; }
+
+        public DbSet<Answer> Answers { get; set; }
     }
 }

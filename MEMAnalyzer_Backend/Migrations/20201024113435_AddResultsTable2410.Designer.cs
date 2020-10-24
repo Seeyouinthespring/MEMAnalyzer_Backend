@@ -4,45 +4,22 @@ using MEMAnalyzer_Backend.DBModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MEMAnalyzer_Backend.Migrations
 {
     [DbContext(typeof(MEMAnalyzerContext))]
-    partial class MEMAnalyzerContextModelSnapshot : ModelSnapshot
+    [Migration("20201024113435_AddResultsTable2410")]
+    partial class AddResultsTable2410
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("MEMAnalyzer_Backend.DBModels.Answer", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Mark")
-                        .HasColumnType("int");
-
-                    b.Property<long>("MemId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ResultId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemId");
-
-                    b.HasIndex("ResultId");
-
-                    b.ToTable("Answers");
-                });
 
             modelBuilder.Entity("MEMAnalyzer_Backend.DBModels.ApplicationUser", b =>
                 {
@@ -337,21 +314,6 @@ namespace MEMAnalyzer_Backend.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("MEMAnalyzer_Backend.DBModels.Answer", b =>
-                {
-                    b.HasOne("MEMAnalyzer_Backend.DBModels.Mem", "Mem")
-                        .WithMany()
-                        .HasForeignKey("MemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MEMAnalyzer_Backend.DBModels.Result", "Result")
-                        .WithMany()
-                        .HasForeignKey("ResultId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MEMAnalyzer_Backend.DBModels.ApplicationUser", b =>
