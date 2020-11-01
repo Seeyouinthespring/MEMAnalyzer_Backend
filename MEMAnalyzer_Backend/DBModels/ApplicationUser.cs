@@ -18,5 +18,9 @@ namespace MEMAnalyzer_Backend.DBModels
         public string ProfilePic { get; set; }
 
         public string FullName { get; set; }
+
+        public bool Gender { get; set; }
+
+        public DateTime BirthDate { get; set; }
     }
 }

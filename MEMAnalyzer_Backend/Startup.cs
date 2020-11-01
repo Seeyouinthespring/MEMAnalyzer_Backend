@@ -5,9 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using MEMAnalyzer_Backend.DataAccessLayer;
 using MEMAnalyzer_Backend.DBModels;
 using MEMAnalyzer_Backend.Interfaces;
+using MEMAnalyzer_Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,6 +63,7 @@ namespace MEMAnalyzer_Backend
             });
 
             services.AddControllers();
+            services.AddAutoMapper();
             services.AddSwaggerGen();
             AddOwnServices(services);
 
@@ -95,6 +98,7 @@ namespace MEMAnalyzer_Backend
         private void AddOwnServices(IServiceCollection services)
         {
             services.AddScoped<ICommonRepository, CommonRepository>();
+            services.AddScoped<IUserService, UserService>();
         }
 
 
