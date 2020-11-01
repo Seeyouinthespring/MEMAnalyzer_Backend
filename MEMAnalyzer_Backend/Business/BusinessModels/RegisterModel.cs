@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace MEMAnalyzer_Backend.Business.BusinessModels
@@ -14,5 +15,11 @@ namespace MEMAnalyzer_Backend.Business.BusinessModels
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
+
+        [Required(ErrorMessage = "Birth Date is required")]
+        public DateTime DateOfBirth { get; set; }
+
+        [Required(ErrorMessage = "Gender is required")]
+        public bool Gender { get; set; }
     }
 }

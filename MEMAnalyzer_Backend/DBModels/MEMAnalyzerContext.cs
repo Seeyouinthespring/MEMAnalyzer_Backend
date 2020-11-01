@@ -7,7 +7,15 @@ namespace MEMAnalyzer_Backend.DBModels
     {
         public MEMAnalyzerContext(DbContextOptions<MEMAnalyzerContext> opt) : base(opt)
         {
+            Database.EnsureCreated();  
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        {
+            if(!optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-70S4V3O\\SQLEXPRESS;Initial Catalog=memanalyzer;User ID=DESKTOP-70S4V3O\\nickz;Integrated Security=SSPI;Persist Security Info=False");
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
