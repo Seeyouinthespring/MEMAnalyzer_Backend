@@ -9,5 +9,7 @@ namespace MEMAnalyzer_Backend.Interfaces
     public interface IMemesService
     {
         Task<List<MemViewModel>> GetAllMemesAsync();
+
+        Task<bool> AddMemAsync(string fileName, long categoryId);
     }
 }

@@ -18,6 +18,21 @@ namespace MEMAnalyzer_Backend.Services
             _commonRepository = commonRepository;
         }
 
+        public async Task<bool> AddMemAsync(string fileName, long categoryId)
+        {
+            Mem entity = new Mem()
+            {
+                Code = fileName.Remove(fileName.IndexOf("."), 4),
+                Picture = fileName,
+                CategoryId = categoryId
+            };
+            await _commonRepository.AddAsync(entity);
+            await _commonRepository.SaveAsync();
+
+            Mem result = await _commonRepository.FindByIdAsync<Mem>(entity.Id);
+            return entity != null;
+        }
+
         public async Task<List<MemViewModel>> GetAllMemesAsync() 
         {
             List<Mem> memes = await _commonRepository.GetAll<Mem>()

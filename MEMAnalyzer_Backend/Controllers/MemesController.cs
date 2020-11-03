@@ -40,11 +40,14 @@ namespace MEMAnalyzer_Backend.Controllers
         /// Upload file to the project
         /// </summary>
         /// <param name="files">Uploading file. Example key.jpg</param>
+        /// <param name="categoryId">Category of the mem. Example 1 or 2 or 3 or 4 or 5</param>
         /// <returns></returns>
         [HttpPost("UploadMem")]
         [Swagger200(typeof(string))]
-        public async Task<string> AddImage([FromForm] IFormFile files)
+        public async Task<string> AddImage([FromForm] IFormFile files, [FromQuery] long categoryId)
         {
+            if (!await _memesService.AddMemAsync(files.FileName, categoryId))
+                return "an error ocured while additing mem to the database";
             return await UploadImageAsync(files);
         }
 
@@ -57,7 +60,6 @@ namespace MEMAnalyzer_Backend.Controllers
         [HttpGet("GetRealMem")]
         public async Task<IActionResult> GetRealImage([FromQuery] string fileName)
         {
-
             FileContentResult a = await GetImage(fileName);
             if (a == null) 
                 return new JsonResult( new { Message = "file doesn`t exist"});
