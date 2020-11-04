@@ -4,7 +4,6 @@ using MEMAnalyzer_Backend.Helpers;
 using MEMAnalyzer_Backend.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MEMAnalyzer_Backend.Services
@@ -18,12 +17,12 @@ namespace MEMAnalyzer_Backend.Services
             _commonRepository = commonRepository;
         }
 
-        public async Task<bool> AddMemAsync(string fileName, long categoryId)
+        public async Task<bool> AddMemAsync(byte[] bytes, string fileName, long categoryId)
         {
             Mem entity = new Mem()
             {
                 Code = fileName.Remove(fileName.IndexOf("."), 4),
-                Picture = fileName,
+                Picture = bytes,
                 CategoryId = categoryId
             };
             await _commonRepository.AddAsync(entity);
@@ -40,6 +39,14 @@ namespace MEMAnalyzer_Backend.Services
                 .ToListAsync();
 
             return memes.MapTo<List<MemViewModel>>();
+        }
+
+        public async Task<byte[]> GetMemBytesAsync(string code)
+        {
+            Mem mem = await _commonRepository.FindFirstByConditionAsync<Mem>(x => x.Code == code);
+            if (mem == null)
+                return null;
+            return mem.Picture;
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using MEMAnalyzer_Backend.Business;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MEMAnalyzer_Backend.Interfaces
@@ -10,6 +8,8 @@ namespace MEMAnalyzer_Backend.Interfaces
     {
         Task<List<MemViewModel>> GetAllMemesAsync();
 
-        Task<bool> AddMemAsync(string fileName, long categoryId);
+        Task<byte[]> GetMemBytesAsync(string code);
+
+        Task<bool> AddMemAsync(byte[] bytes, string fileName, long categoryId);
     }
 }

@@ -6,7 +6,7 @@ namespace MEMAnalyzer_Backend.DBModels
     {
         public string Code { get; set; }
 
-        public string Picture { get; set; }
+        public byte[] Picture { get; set; }
 
         [ForeignKey(nameof(Category))]
         public long CategoryId { get; set; }

@@ -1,23 +1,21 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace MEMAnalyzer_Backend.Business
 {
+    /// <summary>
+    /// Model for memes
+    /// </summary>
     public class MemViewModel
     {
+        /// <summary>
+        /// Id of the mem
+        /// </summary>
+        /// <example>1</example>
         public long Id { get; set; }
 
-        public byte[] ImageBytes { get; set; }
-
-        public string Picture { get; set; }
-
-        public string PictureCode { get; set; }
-
-        public string CategoryCode { get; set; }
-
-        public long CategoryId { get; set; }
+        /// <summary>
+        /// Picture of mem as byte array
+        /// </summary>
+        /// <example>...</example>
+        public byte[] Picture { get; set; }
     }
 }
