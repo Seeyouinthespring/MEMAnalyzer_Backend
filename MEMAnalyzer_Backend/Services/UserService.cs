@@ -1,4 +1,4 @@
-﻿using MEMAnalyzer_Backend.Business.BusinessModels;
+﻿using MEMAnalyzer_Backend.Business;
 using MEMAnalyzer_Backend.DBModels;
 using MEMAnalyzer_Backend.Interfaces;
 using System.Collections.Generic;

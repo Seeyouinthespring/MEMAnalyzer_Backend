@@ -2,6 +2,7 @@
 using MEMAnalyzer_Backend.Business.Constants;
 using MEMAnalyzer_Backend.DBModels;
 using MEMAnalyzer_Backend.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -139,6 +140,7 @@ namespace MEMAnalyzer_Backend.Controllers
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
 
+        [Authorize(Roles = Roles.ADMINISTRATOR)]
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {

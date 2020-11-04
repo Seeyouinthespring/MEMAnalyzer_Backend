@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MEMAnalyzer_Backend.Business.BusinessModels
+namespace MEMAnalyzer_Backend.Business
 {
     public class ApplicationUserViewModel
     {

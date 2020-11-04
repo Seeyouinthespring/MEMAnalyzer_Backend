@@ -99,6 +99,7 @@ namespace MEMAnalyzer_Backend
         {
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMemesService, MemesService>();
         }
 
 
