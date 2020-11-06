@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MEMAnalyzer_Backend.Migrations
 {
     [DbContext(typeof(MEMAnalyzerContext))]
-    [Migration("20201104085609_FieldPictureInMemTableTypeChange")]
-    partial class FieldPictureInMemTableTypeChange
+    [Migration("20201104142526_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

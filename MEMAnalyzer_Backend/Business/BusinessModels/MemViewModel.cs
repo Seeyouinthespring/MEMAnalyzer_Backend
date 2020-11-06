@@ -13,9 +13,9 @@ namespace MEMAnalyzer_Backend.Business
         public long Id { get; set; }
 
         /// <summary>
-        /// Picture of mem as byte array
+        /// Picture code of mem
         /// </summary>
-        /// <example>...</example>
-        public byte[] Picture { get; set; }
+        /// <example>brokendog</example>
+        public string Picture { get; set; }
     }
 }

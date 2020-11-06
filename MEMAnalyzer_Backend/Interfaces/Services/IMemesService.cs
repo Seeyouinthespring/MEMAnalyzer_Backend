@@ -10,6 +10,8 @@ namespace MEMAnalyzer_Backend.Interfaces
 
         Task<byte[]> GetMemBytesAsync(string code);
 
-        Task<bool> AddMemAsync(byte[] bytes, string fileName, long categoryId);
+        Task<bool> AddMemAsync(string fileName, long categoryId);
+
+        Task<ResultViewModel> CalculateResultAsync(List<ResultToHandleModel> answers);
     }
 }

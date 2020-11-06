@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.SignalR;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MEMAnalyzer_Backend.DBModels
 {
@@ -23,5 +26,7 @@ namespace MEMAnalyzer_Backend.DBModels
         public double CategorySixPercentage { get; set; }
         
         public double CategorySevenPercentage { get; set; }
+
+        public ICollection<Answer> Answers { get; set; }
     }
 }
