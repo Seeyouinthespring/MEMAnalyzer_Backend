@@ -22,10 +22,10 @@ namespace MEMAnalyzer_Backend.DBModels
         public double CategoryFourPercentage { get; set; }
         
         public double CategoryFivePercentage { get; set; }
-        
-        public double CategorySixPercentage { get; set; }
-        
-        public double CategorySevenPercentage { get; set; }
+
+        [ForeignKey(nameof(Statement))]
+        public long StatementId { get; set; }
+        public Statement Stetement { get; set; }
 
         public ICollection<Answer> Answers { get; set; }
     }

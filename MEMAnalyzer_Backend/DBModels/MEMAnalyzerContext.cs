@@ -28,5 +28,7 @@ namespace MEMAnalyzer_Backend.DBModels
         public DbSet<Result> Results { get; set; }
 
         public DbSet<Answer> Answers { get; set; }
+
+        public DbSet<Statement> Statements { get; set; }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using MEMAnalyzer_Backend.Attributes;
 using MEMAnalyzer_Backend.Business;
+using MEMAnalyzer_Backend.Business.Constants;
+using MEMAnalyzer_Backend.Helpers;
 using MEMAnalyzer_Backend.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +17,6 @@ namespace MEMAnalyzer_Backend.Controllers
     public class MemesController : ControllerBase
     {
         private readonly IMemesService _memesService;
-
 
         public MemesController(IMemesService memesService)
         {
@@ -40,10 +42,9 @@ namespace MEMAnalyzer_Backend.Controllers
         /// <param name="categoryId">Category of the mem. Example 1 or 2 or 3 or 4 or 5</param>
         [HttpPost("UploadMem")]
         [Swagger200(typeof(string))]
-        public async Task<string> AddImage([FromQuery] string file, [FromQuery] long categoryId)
+        [Authorize(Roles = Roles.ADMINISTRATOR)]
+        public async Task<string> AddImage([FromQuery][Required] string file, [FromQuery][Required] long categoryId)
         { 
-            if (file == null || file.Length == 0)
-                return "the file is empty";
             if (!await _memesService.AddMemAsync(file, categoryId))
                 return "an error ocured while additing mem to the database";
             return "picture was successfuly added";   
@@ -58,13 +59,60 @@ namespace MEMAnalyzer_Backend.Controllers
         [HttpPost("Result")]
         public async Task<IActionResult> HandleResult([FromBody][Required][MinLength(1)] ResultToHandleModel[] results)
         {
-            ResultViewModel model = await _memesService.CalculateResultAsync(results.ToList());
+            string currentUserId = GetCurrentUserId();
+            ResultViewModel model = await _memesService.CalculateResultAsync(results.ToList(), currentUserId);
             if (model == null)
                 return new JsonResult(new
                 {
                     Message = "something went wrong, sorry"
                 });
             return new JsonResult(model);
+        }
+
+        /// <summary>
+        /// Get mem by id
+        /// </summary>
+        /// <param name="id">id of a mem. Example 1</param>
+        /// <returns></returns>
+        [Swagger200(typeof(MemViewModel))]
+        [HttpGet("{id}")]
+        [Authorize(Roles = Roles.ADMINISTRATOR)]
+        public async Task<IActionResult> GetMem(long id)
+        {
+            MemViewModel result = await _memesService.GetMemByIdAsync(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return new JsonResult(result);
+        }
+
+        /// <summary>
+        /// Get mem by id
+        /// </summary>
+        /// <param name="id">id of a mem. Example 1</param>
+        /// <param name="model">model of mem to update</param>
+        /// <returns></returns>
+        [Swagger200(typeof(MemViewModel))]
+        [HttpPut("{id}")]
+        [Authorize(Roles = Roles.ADMINISTRATOR)]
+        public async Task<IActionResult> UpdateMem(long id, MemDtoModel model)
+        {
+            MemViewModel result = await _memesService.UpdateMemAsync(id, model);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return new JsonResult(result);
+        }
+
+        internal string GetCurrentUserId()
+        {
+            return TokenHelper.GetCurrentUserId(Request);
         }
     }
 }

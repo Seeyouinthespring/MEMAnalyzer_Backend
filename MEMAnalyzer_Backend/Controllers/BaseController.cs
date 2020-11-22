@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MEMAnalyzer_Backend.Helpers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace MEMAnalyzer_Backend.Controllers
         {
         }
 
-        internal string GetCurrentUserId() 
+        internal string GetCurrentUserId()
         {
-            return "abc";
+            return TokenHelper.GetCurrentUserId(Request);
         }
 
         protected async Task<IActionResult> GetResultAsync<T>([NotNull] Func<Task<T>> getDataFunction) 

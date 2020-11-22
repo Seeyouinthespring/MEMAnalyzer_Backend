@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -22,5 +23,7 @@ namespace MEMAnalyzer_Backend.DBModels
         public bool Gender { get; set; }
 
         public DateTime BirthDate { get; set; }
+
+        public ICollection<Result> Results { get; set; }
     }
 }

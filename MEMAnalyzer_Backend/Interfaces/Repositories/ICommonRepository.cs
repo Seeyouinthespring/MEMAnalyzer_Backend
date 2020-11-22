@@ -22,6 +22,7 @@ namespace MEMAnalyzer_Backend.Interfaces
         bool Any<T>(Expression<Func<T, bool>> expression) where T : class;
         T FindById<T>(long id) where T : class;
         Task<T> FindByIdAsync<T>(long id) where T : class;
+        Task<T> FindByIdAsync<T>(string id) where T : class;
         T FindById<T>(long[] ids) where T : class;
         T FindById<T>(int id) where T : class;
         Task<T> FindByIdAsync<T>(int id) where T : class;

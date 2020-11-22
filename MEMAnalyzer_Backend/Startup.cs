@@ -23,6 +23,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using MEMAnalyzer_Backend.Helpers;
 
 namespace MEMAnalyzer_Backend
 {
@@ -65,6 +67,10 @@ namespace MEMAnalyzer_Backend
             services.AddControllers();
             services.AddAutoMapper();
             services.AddSwaggerGen();
+            services.AddMvc().AddJsonOptions(opts => 
+            {
+                opts.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+            });
             AddOwnServices(services);
 
             services.AddSwaggerGen(c =>

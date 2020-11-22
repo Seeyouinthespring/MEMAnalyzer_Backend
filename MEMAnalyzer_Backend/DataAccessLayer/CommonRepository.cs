@@ -157,5 +157,10 @@ namespace MEMAnalyzer_Backend.DataAccessLayer
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task<T> FindByIdAsync<T>(string id) where T : class
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
     }
 }

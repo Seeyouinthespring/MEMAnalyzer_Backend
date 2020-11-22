@@ -12,6 +12,10 @@ namespace MEMAnalyzer_Backend.Interfaces
 
         Task<bool> AddMemAsync(string fileName, long categoryId);
 
-        Task<ResultViewModel> CalculateResultAsync(List<ResultToHandleModel> answers);
+        Task<MemWithCategoryViewModel> UpdateMemAsync(long id, MemDtoModel model);
+
+        Task<MemWithCategoryViewModel> GetMemByIdAsync(long id);
+
+        Task<ResultViewModel> CalculateResultAsync(List<ResultToHandleModel> answers, string userId);
     }
 }

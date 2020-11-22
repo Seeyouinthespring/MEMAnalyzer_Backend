@@ -33,7 +33,7 @@ namespace MEMAnalyzer_Backend.Services
             return result != null;
         }
 
-        public async Task<ResultViewModel> CalculateResultAsync(List<ResultToHandleModel> answers)
+        public async Task<ResultViewModel> CalculateResultAsync(List<ResultToHandleModel> answers, string userId)
         {
             List<Mem> existingMemes = await _commonRepository.GetAll<Mem>()
                 .Include(x => x.Category)
@@ -75,8 +75,11 @@ namespace MEMAnalyzer_Backend.Services
             }
 
             var resultModel = resultEntity.MapTo<ResultViewModel>();
-            resultModel.Statement = DefineStatement(resultModel);
+            Statement statement = await DefineStatement(resultModel);
+            resultModel.Statement = statement.Text;
 
+            resultEntity.StatementId = statement.Id;
+            resultEntity.UserId = userId;
             resultEntity.Answers = answers.MapTo<List<Answer>>();
             await _commonRepository.AddAsync(resultEntity);
             await _commonRepository.SaveAsync();
@@ -84,7 +87,7 @@ namespace MEMAnalyzer_Backend.Services
             return resultModel;
         }
 
-        private string DefineStatement(ResultViewModel resultModel)
+        private async Task<Statement> DefineStatement(ResultViewModel resultModel)
         {
             List<double> sortArray = new List<double>()
             {
@@ -96,20 +99,19 @@ namespace MEMAnalyzer_Backend.Services
             };
             sortArray.Sort();
             if (sortArray.Last() < 45)
-                return Statements.NEGATION;
+                return await _commonRepository.FindByCondition<Statement>(x => x.OfficialCode == Statements.NEGATION).FirstOrDefaultAsync();
             if (sortArray.First() > 75 || sortArray.Last() == sortArray[^2])
-                return Statements.UNPRETENTIOUSNESS;
+                return await _commonRepository.FindByCondition<Statement>(x => x.OfficialCode == Statements.UNPRETENTIOUSNESS).FirstOrDefaultAsync();
             if (sortArray.Last() == resultModel.Domestic)
-                return Statements.DOMESTIC;
+                return await _commonRepository.FindByCondition<Statement>(x => x.OfficialCode == Statements.DOMESTIC).FirstOrDefaultAsync();
             if (sortArray.Last() == resultModel.Popular)
-                return Statements.POPULAR;
+                return await _commonRepository.FindByCondition<Statement>(x => x.OfficialCode == Statements.POPULAR).FirstOrDefaultAsync();
             if (sortArray.Last() == resultModel.Pointless)
-                return Statements.POINTLESS;
+                return await _commonRepository.FindByCondition<Statement>(x => x.OfficialCode == Statements.POINTLESS).FirstOrDefaultAsync();
             if (sortArray.Last() == resultModel.Intellectual)
-                return Statements.INTELLECTUAL;
-            if (sortArray.Last() == resultModel.Conservative)
-                return Statements.CONSERVATIVE;
-            return "i dont even know";
+                return await _commonRepository.FindByCondition<Statement>(x => x.OfficialCode == Statements.INTELLECTUAL).FirstOrDefaultAsync();
+            else// (sortArray.Last() == resultModel.Conservative)
+                return await _commonRepository.FindByCondition<Statement>(x => x.OfficialCode == Statements.CONSERVATIVE).FirstOrDefaultAsync();
         }
 
         public async Task<List<MemViewModel>> GetAllMemesAsync() 
@@ -119,6 +121,33 @@ namespace MEMAnalyzer_Backend.Services
                 .ToListAsync();
 
             return memes.MapTo<List<MemViewModel>>();
+        }
+
+        public async Task<MemWithCategoryViewModel> UpdateMemAsync(long id, MemDtoModel model) 
+        {
+            var entity = await _commonRepository.FindByCondition<Mem>(x => x.Id == id)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            if (entity == null)
+                return null;
+            entity = model.MapTo<Mem>();
+            entity.Picture = null;
+            entity.Id = id;
+
+            _commonRepository.Update(entity);
+            await _commonRepository.SaveAsync();
+            return await GetMemByIdAsync(id);
+        }
+
+        public async Task<MemWithCategoryViewModel> GetMemByIdAsync(long id)
+        {
+            var entity = await _commonRepository.FindByCondition<Mem>(x => x.Id == id)
+                .Include(x => x.Category)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            if (entity == null)
+                return null;
+            return entity.MapTo<MemWithCategoryViewModel>();
         }
 
         public async Task<byte[]> GetMemBytesAsync(string code)

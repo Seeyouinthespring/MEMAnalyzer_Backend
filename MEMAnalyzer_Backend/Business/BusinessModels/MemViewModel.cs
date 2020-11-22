@@ -1,4 +1,6 @@
 ﻿
+using MEMAnalyzer_Backend.DBModels;
+
 namespace MEMAnalyzer_Backend.Business
 {
     /// <summary>
@@ -17,5 +19,34 @@ namespace MEMAnalyzer_Backend.Business
         /// </summary>
         /// <example>brokendog</example>
         public string Picture { get; set; }
+    }
+
+    public class MemDtoModel
+    {
+        /// <summary>
+        /// Id of the category
+        /// </summary>
+        /// <example>1</example>
+        public long CategoryId { get; set; }
+
+        /// <summary>
+        /// Picture code of mem
+        /// </summary>
+        /// <example>brokendog</example>
+        public string Code { get; set; }
+    }
+
+    public class MemWithCategoryViewModel: MemViewModel
+    {
+        /// <summary>
+        /// CategoryId
+        /// </summary>
+        /// <example>2</example>
+        public string CategoryId { get; set; }
+
+        /// <summary>
+        /// Category model
+        /// </summary>
+        public Category Category { get; set; }
     }
 }

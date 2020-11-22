@@ -10,6 +10,6 @@ namespace MEMAnalyzer_Backend.DBModels
 
         public int Order { get; set; }
 
-        public ICollection<Mem> Memes { get; set; }
+        //public ICollection<Mem> Memes { get; set; }
     }
 }
