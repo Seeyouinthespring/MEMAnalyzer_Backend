@@ -3,6 +3,7 @@ using MEMAnalyzer_Backend.DBModels;
 using MEMAnalyzer_Backend.Helpers;
 using MEMAnalyzer_Backend.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,8 +34,14 @@ namespace MEMAnalyzer_Backend.Services
             return result != null;
         }
 
-        public async Task<ResultViewModel> CalculateResultAsync(List<ResultToHandleModel> answers, string userId)
+        public async Task<ResultViewModel> CalculateResultAsync(List<ResultToHandleModel> answers, string userId, DateTime currentDate)
         {
+            var oldResult = await _commonRepository.FindByCondition<Result>(x => x.UserId == userId)
+                .Include(x => x.Answers)
+                .FirstOrDefaultAsync();
+            if (oldResult != null)
+                await DeleteOldRsultAsync(oldResult);
+
             List<Mem> existingMemes = await _commonRepository.GetAll<Mem>()
                 .Include(x => x.Category)
                 .ToListAsync();
@@ -78,6 +85,10 @@ namespace MEMAnalyzer_Backend.Services
             Statement statement = await DefineStatement(resultModel);
             resultModel.Statement = statement.Text;
 
+            if (userId == null)
+                return resultModel;
+
+            resultEntity.Date = currentDate;
             resultEntity.StatementId = statement.Id;
             resultEntity.UserId = userId;
             resultEntity.Answers = answers.MapTo<List<Answer>>();
@@ -85,6 +96,13 @@ namespace MEMAnalyzer_Backend.Services
             await _commonRepository.SaveAsync();
              
             return resultModel;
+        }
+
+        private async Task DeleteOldRsultAsync(Result oldResult)
+        {
+            _commonRepository.DeleteAll(oldResult.Answers);
+            await _commonRepository.DeleteAsync<Result>(oldResult.Id);
+            await _commonRepository.SaveAsync();
         }
 
         private async Task<Statement> DefineStatement(ResultViewModel resultModel)
@@ -156,6 +174,14 @@ namespace MEMAnalyzer_Backend.Services
             if (mem == null)
                 return null;
             return mem.Picture;
+        }
+
+        public async Task<MemViewModel> GetRandomMemAsync()
+        {
+            List<Mem> memes = await _commonRepository.GetAllAsync<Mem>();
+            Random rnd = new Random();
+            int randomValue = rnd.Next(0, memes.Count() - 1);
+            return memes[randomValue].MapTo<MemViewModel>();
         }
     }
 }

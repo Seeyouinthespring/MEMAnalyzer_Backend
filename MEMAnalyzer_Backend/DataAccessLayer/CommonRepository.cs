@@ -18,11 +18,6 @@ namespace MEMAnalyzer_Backend.DataAccessLayer
             _context = context;
         }
 
-        public void ExecuteSqlCommand(string sqlCommand)
-        {
-            _context.Database.ExecuteSqlCommand(sqlCommand);
-        }
-
         public IQueryable<T> GetAll<T>() where T : class
         {
             return _context.Set<T>();

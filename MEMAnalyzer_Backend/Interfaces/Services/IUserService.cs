@@ -1,5 +1,6 @@
 ﻿using MEMAnalyzer_Backend.Business;
 using MEMAnalyzer_Backend.DBModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace MEMAnalyzer_Backend.Interfaces
 
     public interface IUserService
     {
-        Task<List<ApplicationUserViewModel>> GetAllUsersAsync();
+        Task<List<ApplicationUserViewModel>> GetAllUsersAsync(string search, bool? gender, int? startAge, int? endAge, DateTime currentDate);
 
         Task<ApplicationUserWithResultViewModel> GetUserByIdAsync(string id);
 

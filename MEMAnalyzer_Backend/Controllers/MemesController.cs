@@ -5,8 +5,10 @@ using MEMAnalyzer_Backend.Helpers;
 using MEMAnalyzer_Backend.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,14 +61,23 @@ namespace MEMAnalyzer_Backend.Controllers
         [HttpPost("Result")]
         public async Task<IActionResult> HandleResult([FromBody][Required][MinLength(1)] ResultToHandleModel[] results)
         {
+            DateTime currentDate = GetCurrentDate();
             string currentUserId = GetCurrentUserId();
-            ResultViewModel model = await _memesService.CalculateResultAsync(results.ToList(), currentUserId);
+            ResultViewModel model = await _memesService.CalculateResultAsync(results.ToList(), currentUserId, currentDate);
             if (model == null)
                 return new JsonResult(new
                 {
                     Message = "something went wrong, sorry"
                 });
             return new JsonResult(model);
+        }
+
+        internal DateTime GetCurrentDate()
+        {
+            string dateFromRequest = Request.Headers["Current-Date"].ToString();
+            if (string.IsNullOrEmpty(dateFromRequest))
+                return DateTime.Now;
+            return DateTime.TryParse(dateFromRequest, null, DateTimeStyles.AdjustToUniversal, out var currentDate) ? currentDate : DateTime.Now;
         }
 
         /// <summary>
@@ -113,6 +124,24 @@ namespace MEMAnalyzer_Backend.Controllers
         internal string GetCurrentUserId()
         {
             return TokenHelper.GetCurrentUserId(Request);
+        }
+
+        /// <summary>
+        /// Get random mem
+        /// </summary>
+        /// <returns></returns>
+        [Swagger200(typeof(MemViewModel))]
+        [HttpGet("Random")]
+        public async Task<IActionResult> GetRandomMem()
+        {
+            MemViewModel result = await _memesService.GetRandomMemAsync();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return new JsonResult(result);
         }
     }
 }

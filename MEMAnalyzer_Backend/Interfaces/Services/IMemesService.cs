@@ -1,4 +1,5 @@
 ﻿using MEMAnalyzer_Backend.Business;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,6 +17,9 @@ namespace MEMAnalyzer_Backend.Interfaces
 
         Task<MemWithCategoryViewModel> GetMemByIdAsync(long id);
 
-        Task<ResultViewModel> CalculateResultAsync(List<ResultToHandleModel> answers, string userId);
+        Task<ResultViewModel> CalculateResultAsync(List<ResultToHandleModel> answers, string userId, DateTime currentDate);
+
+        Task<MemViewModel> GetRandomMemAsync();
+
     }
 }

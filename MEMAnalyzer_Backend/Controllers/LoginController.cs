@@ -246,9 +246,10 @@ namespace MEMAnalyzer_Backend.Controllers
         [Swagger200(typeof(ApplicationUserViewModel))]
         [Authorize(Roles = Roles.ADMINISTRATOR)]
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers(string search, bool? gender, int? startAge, int? endAge)
         {
-            return await GetResultAsync(() => _userService.GetAllUsersAsync());
+            DateTime currentDate = GetCurrentDate();
+            return await GetResultAsync(() => _userService.GetAllUsersAsync(search, gender, startAge, endAge, currentDate));
         }
 
         /// <summary>

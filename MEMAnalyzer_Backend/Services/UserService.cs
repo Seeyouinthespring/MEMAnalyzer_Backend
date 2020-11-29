@@ -40,10 +40,25 @@ namespace MEMAnalyzer_Backend.Services
             return BlockingStatus.AlreadyBanned;
         }
 
-        public async Task<List<ApplicationUserViewModel>> GetAllUsersAsync()
+        public async Task<List<ApplicationUserViewModel>> GetAllUsersAsync(string search, bool? gender, int? startAge, int? endAge, DateTime currentDate)
         {
-            var users = await _commonRepository.GetAllAsync<ApplicationUser>();
+            search = search?.ToUpper();
+            var usersQuery = _commonRepository.FindByCondition<ApplicationUser>(x =>
+                string.IsNullOrEmpty(search) ||
+                x.NormalizedUserName.Contains(search) ||
+                x.NormalizedEmail.Contains(search) ||
+                x.FullName.ToUpper().Contains(search));
 
+            if (gender != null) 
+                usersQuery = usersQuery.Where(x => x.Gender == gender);
+
+            if (startAge != null)
+                usersQuery = usersQuery.Where(x => currentDate >= x.BirthDate.AddYears(startAge.Value));
+
+            if (endAge != null)
+                usersQuery = usersQuery.Where(x => currentDate <= x.BirthDate.AddYears(endAge.Value));
+            
+            var users = await usersQuery.ToListAsync();
             return users.MapTo<List<ApplicationUserViewModel>>();
         }
 

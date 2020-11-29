@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,8 +12,8 @@ namespace MEMAnalyzer_Backend.DBModels
         public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-        public string DeviceInfo { get; set; }
-        
+        public DateTime Date {get; set;}
+
         public double CategoryOnePercentage { get; set; }
         
         public double CategorytwoPercentage { get; set; }

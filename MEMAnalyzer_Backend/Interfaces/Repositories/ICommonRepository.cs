@@ -8,7 +8,6 @@ namespace MEMAnalyzer_Backend.Interfaces
 {
     public interface ICommonRepository
     {
-        void ExecuteSqlCommand(string sqlCommand);
         IQueryable<T> GetAll<T>() where T : class;
         Task<List<T>> GetAllAsync<T>() where T : class;
         IQueryable<T> FindByCondition<T>(Expression<Func<T, bool>> expression) where T : class;
