@@ -34,9 +34,12 @@ namespace MEMAnalyzer_Backend
                 .ForMember(dest => dest.Pointless, src => src.MapFrom(x => x.CategoryThreePercentage))
                 .ForMember(dest => dest.Intellectual, src => src.MapFrom(x => x.CategoryFourPercentage))
                 .ForMember(dest => dest.Conservative, src => src.MapFrom(x => x.CategoryFivePercentage))
+                .ForMember(dest => dest.Date, src => src.MapFrom(x => DateTime.SpecifyKind(x.Date, DateTimeKind.Local)))
                 .ForMember(dest => dest.Statement, src => src.MapFrom(x => x.Stetement.Text));
 
             CreateMap<ApplicationUser, ApplicationUserWithResultViewModel>()
+                .ForMember(dest => dest.IsLocked, src => src.MapFrom(x => x.LockoutEnd != null || x.LockoutEnd >= DateTime.Today))
+                //.ForMember(dest => dest.LockoutEnd, src => src.MapFrom(x => DateTime.SpecifyKind(x.LockoutEnd.Value, DateTimeKind.Local)))
                 .ForMember(dest => dest.DateOfBirth, src => src.MapFrom(x => DateTime.SpecifyKind(x.BirthDate, DateTimeKind.Local)))
                 .ForMember(dest => dest.Result, src => src.MapFrom(x => x.Results.FirstOrDefault()))
                 .ForMember(dest => dest.Role, src => src.MapFrom(x => (x.IdentityRole == null) ? null : x.IdentityRole.Name));

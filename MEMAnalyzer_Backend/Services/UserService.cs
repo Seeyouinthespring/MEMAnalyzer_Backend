@@ -9,6 +9,7 @@ using System.Linq;
 using System;
 using MEMAnalyzer_Backend.Business.Constants;
 using AutoMapper;
+using MEMAnalyzer_Backend.Business.BusinessModels;
 
 namespace MEMAnalyzer_Backend.Services
 {
@@ -26,9 +27,11 @@ namespace MEMAnalyzer_Backend.Services
             var entity = await _commonRepository.FindByCondition<ApplicationUser>(x => x.Id == id)
                 .Include(x => x.IdentityRole)
                 .FirstOrDefaultAsync();
-            if (entity == null) return BlockingStatus.NotFound;
+            if (entity == null)
+                return BlockingStatus.NotFound;
 
-            if (entity.IdentityRole.Name == Roles.ADMINISTRATOR) return BlockingStatus.Admin;
+            if (entity.IdentityRole.Name == Roles.ADMINISTRATOR) 
+                return BlockingStatus.Admin;
 
             if (entity.LockoutEnd == null || entity.LockoutEnd < DateTime.Today)
             {

@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace MEMAnalyzer_Backend.Business
 {
     /// <summary>
@@ -41,5 +43,11 @@ namespace MEMAnalyzer_Backend.Business
         /// </summary>
         /// <example>ure r beautiful</example>
         public string Statement { get; set; }
+
+        /// <summary>
+        /// Date when the test was passed
+        /// </summary>
+        /// <example>ure r beautiful</example>
+        public DateTimeOffset Date { get; set; }
     }
 }

@@ -258,7 +258,7 @@ namespace MEMAnalyzer_Backend.Controllers
         /// <param name="userId">id of the user. Example: 20076730-5739-4d98-962a-c4f5253c0893</param>/>
         /// <returns></returns>
         [Authorize(Roles = Roles.ADMINISTRATOR)]
-        [Swagger200(typeof(Response))]
+        [Swagger200(typeof(BlockingResult))]
         [HttpPut("Block/{userId}")]
         public async Task<IActionResult> BlockUser(string userId)
         {
@@ -268,10 +268,10 @@ namespace MEMAnalyzer_Backend.Controllers
             {
                 case BlockingStatus.Success:
                     HttpContext.Response.StatusCode = 200;
-                    return new JsonResult(new Response 
-                    { 
-                        Status = "Success", 
-                        Message = "User has been blocked successfully" 
+                    return new JsonResult(new BlockingResult
+                    {
+                        Status = "Success",
+                        Date = DateTime.Today.AddDays(7)
                     });
                 case BlockingStatus.Admin:
                     HttpContext.Response.StatusCode = 409;

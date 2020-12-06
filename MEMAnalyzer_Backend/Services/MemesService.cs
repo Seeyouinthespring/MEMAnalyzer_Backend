@@ -80,6 +80,7 @@ namespace MEMAnalyzer_Backend.Services
                         break;
                 }    
             }
+            resultEntity.Date = currentDate;
 
             var resultModel = resultEntity.MapTo<ResultViewModel>();
             Statement statement = await DefineStatement(resultModel);
@@ -88,7 +89,6 @@ namespace MEMAnalyzer_Backend.Services
             if (userId == null)
                 return resultModel;
 
-            resultEntity.Date = currentDate;
             resultEntity.StatementId = statement.Id;
             resultEntity.UserId = userId;
             resultEntity.Answers = answers.MapTo<List<Answer>>();

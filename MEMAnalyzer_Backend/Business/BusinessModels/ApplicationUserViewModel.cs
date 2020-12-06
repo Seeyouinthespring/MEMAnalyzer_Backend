@@ -73,6 +73,18 @@ namespace MEMAnalyzer_Backend.Business
         /// </summary>
         /// <example>Administrator</example>
         public string Role { get; set; }
+
+        /// <summary>
+        /// Date of lockout end
+        /// </summary>
+        /// <example>2021-11-16</example>
+        public DateTimeOffset LockoutEnd { get; set; }
+
+        /// <summary>
+        /// Is user locked
+        /// </summary>
+        /// <example>true</example>
+        public bool IsLocked { get; set; }
     }
 
     /// <summary>
