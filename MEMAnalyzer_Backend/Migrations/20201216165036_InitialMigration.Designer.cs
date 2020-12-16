@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MEMAnalyzer_Backend.Migrations
 {
     [DbContext(typeof(MEMAnalyzerContext))]
-    [Migration("20201115125729_AddedStatementsTableAndSomeFixes")]
-    partial class AddedStatementsTableAndSomeFixes
+    [Migration("20201216165036_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -197,10 +197,10 @@ namespace MEMAnalyzer_Backend.Migrations
                     b.Property<double>("CategorytwoPercentage")
                         .HasColumnType("float");
 
-                    b.Property<string>("DeviceInfo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<long?>("StatementId")
+                    b.Property<long>("StatementId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
@@ -389,7 +389,7 @@ namespace MEMAnalyzer_Backend.Migrations
             modelBuilder.Entity("MEMAnalyzer_Backend.DBModels.Mem", b =>
                 {
                     b.HasOne("MEMAnalyzer_Backend.DBModels.Category", "Category")
-                        .WithMany("Memes")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -397,9 +397,11 @@ namespace MEMAnalyzer_Backend.Migrations
 
             modelBuilder.Entity("MEMAnalyzer_Backend.DBModels.Result", b =>
                 {
-                    b.HasOne("MEMAnalyzer_Backend.DBModels.Statement", null)
+                    b.HasOne("MEMAnalyzer_Backend.DBModels.Statement", "Stetement")
                         .WithMany("Results")
-                        .HasForeignKey("StatementId");
+                        .HasForeignKey("StatementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MEMAnalyzer_Backend.DBModels.ApplicationUser", "ApplicationUser")
                         .WithMany("Results")
