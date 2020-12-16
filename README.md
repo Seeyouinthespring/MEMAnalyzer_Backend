@@ -12,12 +12,8 @@ Before starting installation make sure that this sources are installed on your c
 * SQL Express Server 2016 or higher
 * MicrsoftSqlMangementStudio
 
-1. Clone the repository to prefered folder
-
-```sh
-git clone https://github.com/Seeyouinthespring/MEMAnalyzer_Backend
-```
-1. Install database on you SQL Express Server (there are two ways of doing it, use 2.1. or 2.2. steps)
+1. Clone the repository to prefered folder using command `git clone https://github.com/Seeyouinthespring/MEMAnalyzer_Backend`
+1. Install database on you SQL Express Server (there are two ways of doing it, use 2.i. or 2.ii. steps)
     1. From dump
         1. Open your MicrsoftSqlMangementStudio
         1. Connect to your SQL Express Server
@@ -34,7 +30,12 @@ git clone https://github.com/Seeyouinthespring/MEMAnalyzer_Backend
         1. Go to file `appsettingsDevelopment.json` and change the value of the field "DefaultConnection" fill it with your SQL Server Settings, gust leve without changes the property Initial Catalog = memanalyzer
         1. Go to Package Manager Console, write there command: `EntityFrameworkCore\Update-Database`
         1. After executing this command database must be created
-1. If you havent change your connection string yet, do it (whatch step 2.2.3 and so on)
+1. If you havent change your connection string yet, do it (whatch step 2.ii.c and so on)
 1. Deploy application in VisualStudio by pushing button MEMAnalyzer_Backend
+1. After application deploying you need to create administrator using swagger or postman. 
+    1. Go to url `https//:localhost:5001/index.html` in your browser
+    1. Chose API `POST /api/Users/RegisterAdmin`, push Try it out
+    1. Fill all the fields with data you want for your administrator (dateformat: dd.MM.yyyy)
+    1. Push execute
         
          
