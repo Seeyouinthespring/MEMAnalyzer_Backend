@@ -17,24 +17,24 @@ Before starting installation make sure that this sources are installed on your c
 ```sh
 git clone https://github.com/Seeyouinthespring/MEMAnalyzer_Backend
 ```
-2. Install database on you SQL Express Server (there are two ways of doing it, use 2.1. or 2.2. steps)
-  56. From dump
-    21. Open your MicrsoftSqlMangementStudio
-    21. Connect to your SQL Express Server
-    21. RightClick on "Data bases" and choose Import Data tier Application
-    21. Go to Import Settings Page
-    21. Click Browse... to specify the path in the space provided. The path name must include a file name and the .bacpac extension.
-    21. There is a bacpac file in the root folder that you have cloned, choose it
-    21. Click next, make sure that the name of database is "memanalyzer", if it not then edit it
-    21. Click next and then ready, after several time database will be created on your local server
-  57. By migration
-    21. Open your MicrsoftSqlMangementStudio
-    21. Create empty database with name "memanalyzer" (RightClick on "Data bases" -> chose "Create database" -> enter the name -> Click Ok)
-    21. Open file `...\MEMAnalyzer_Backend\MEMAnalyzer_Backend\MEMAnalyzer_Backend.sln` with your VisualStudio
-    21. Go to file `appsettingsDevelopment.json` and change the value of the field "DefaultConnection" fill it with your SQL Server Settings, gust leve without changes the property Initial Catalog = memanalyzer
-    21. Go to Package Manager Console, write there command: `EntityFrameworkCore\Update-Database`
-    21. After executing this command database must be created
-3. If you havent change your connection string yet, do it (whatch step 2.2.3 and so on)
-4. Deploy application in VisualStudio by pushing button MEMAnalyzer_Backend
+1. Install database on you SQL Express Server (there are two ways of doing it, use 2.1. or 2.2. steps)
+    1. From dump
+        1. Open your MicrsoftSqlMangementStudio
+        1. Connect to your SQL Express Server
+        1. RightClick on "Data bases" and choose Import Data tier Application
+        1. Go to Import Settings Page
+        1. Click Browse... to specify the path in the space provided. The path name must include a file name and the .bacpac extension.
+        1. There is a bacpac file in the root folder that you have cloned, choose it
+        1. Click next, make sure that the name of database is "memanalyzer", if it not then edit it
+        1. Click next and then ready, after several time database will be created on your local server
+    1. By migration
+        1. Open your MicrsoftSqlMangementStudio
+        1. Create empty database with name "memanalyzer" (RightClick on "Data bases" -> chose "Create database" -> enter the name -> Click Ok)
+        1. Open file `...\MEMAnalyzer_Backend\MEMAnalyzer_Backend\MEMAnalyzer_Backend.sln` with your VisualStudio
+        1. Go to file `appsettingsDevelopment.json` and change the value of the field "DefaultConnection" fill it with your SQL Server Settings, gust leve without changes the property Initial Catalog = memanalyzer
+        1. Go to Package Manager Console, write there command: `EntityFrameworkCore\Update-Database`
+        1. After executing this command database must be created
+1. If you havent change your connection string yet, do it (whatch step 2.2.3 and so on)
+1. Deploy application in VisualStudio by pushing button MEMAnalyzer_Backend
         
          
