@@ -12,12 +12,12 @@ Before starting installation make sure that this sources are installed on your c
 * SQL Express Server 2016 or higher
 * MicrsoftSqlMangementStudio
 
-1.Clone the repository to prefered folder
+1. Clone the repository to prefered folder
 
 ```sh
 git clone https://github.com/Seeyouinthespring/MEMAnalyzer_Backend
 ```
-2.Install database on you SQL Express Server (there are two ways of doing it, use 2.1. or 2.2. steps)
+2. Install database on you SQL Express Server (there are two ways of doing it, use 2.1. or 2.2. steps)
   2. From dump
     2. Open your MicrsoftSqlMangementStudio
     2. Connect to your SQL Express Server
