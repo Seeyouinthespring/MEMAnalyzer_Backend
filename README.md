@@ -38,4 +38,7 @@ Before starting installation make sure that this sources are installed on your c
     1. Fill all the fields with data you want for your administrator (dateformat: dd.MM.yyyy)
     1. Push execute
         
-         
+### Azure Web Server Deployment
+
+To deploy this app on the Azure Web Server use the guide presented by official Microsoft documentstion:
+`https://docs.microsoft.com/ru-ru/aspnet/core/tutorials/publish-to-azure-webapp-using-vs?view=aspnetcore-3.1`
